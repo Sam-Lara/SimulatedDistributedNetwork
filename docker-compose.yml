@@ -1,0 +1,57 @@
+# sources: https://docs.docker.com/compose/compose-file/compose-file-v3/
+version: "3"
+services:
+  master:
+    build:
+      context: .
+      dockerfile: masterDockerfile
+    ports:
+      - "10000:10000"
+    networks:
+      - Proj1-distributed-network
+  client1:
+    build:
+      context: .
+      dockerfile: nodeDockerfile
+    depends_on:
+      - master
+    networks:
+      - Proj1-distributed-network
+  client2:
+    build:
+      context: .
+      dockerfile: nodeDockerfile
+    depends_on:
+      - master
+    networks:
+      - Proj1-distributed-network
+  client3:
+    build:
+      context: .
+      dockerfile: nodeDockerfile
+    depends_on:
+      - master
+    networks:
+      - Proj1-distributed-network
+  client4:
+    build:
+      context: .
+      dockerfile: nodeDockerfile
+    depends_on:
+      - master
+    networks:
+      - Proj1-distributed-network
+
+  wireshark:
+    build:
+      context: .
+      dockerfile: wiresharkDockerfile
+    network_mode: host
+    volumes:
+      - ./captured_traffic:/captured_traffic
+    cap_add:
+      - NET_ADMIN
+
+networks:
+  Proj1-distributed-network:
+    external: true

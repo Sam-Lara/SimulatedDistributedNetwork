@@ -1,0 +1,4 @@
+FROM linuxserver/wireshark
+WORKDIR /app
+COPY network.sh /app/
+ENTRYPOINT ["/app/network.sh"]
